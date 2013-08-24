@@ -42,6 +42,8 @@
 @property (nonatomic, assign) BOOL hasModifiedSpellingDictionary;
 
 - (void)updateTextDirection;
+- (void)updateTextColor;
+
 - (void)updateTextBoxBasedOnPreferredFontSize;
 
 - (void)redrawOriginPoints;

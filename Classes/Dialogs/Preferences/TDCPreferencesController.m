@@ -1031,6 +1031,9 @@
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadServerListAction];
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadMemberListAction];
 
+    [self.masterController.inputTextField updateTextColor];
+	[self.masterController.inputTextField setNeedsDisplay:YES];
+
 	[self.worldController executeScriptCommandOnAllViews:@"sidebarInversionPreferenceChanged" arguments:@[] onQueue:NO];
 }
 
@@ -1039,7 +1042,6 @@
 	//[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadStyleAction]; // Text direction will reload it too.
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextDirectionAction];
 }
-
 - (void)onChangedMainWindowSegmentedController:(id)sender
 {
 	[TPCPreferences performReloadActionForActionType:TPCPreferencesKeyReloadTextFieldSegmentedControllerOriginAction];

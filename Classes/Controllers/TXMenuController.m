@@ -1661,14 +1661,18 @@
 	NSData *stringData = [stringInsert RTFFromRange:NSMakeRange(0, [stringInsert length]) documentAttributes:nil];
     
     [textField replaceCharactersInRange:selectedRange withRTF:stringData];
-
+    
+    [textField defineDefaultTypeSetterAttributes];
+    [textField updateTypeSetterAttributes];
+    
+    if([TPCPreferences invertSidebarColors] == YES){
+        [self.masterController.inputTextField updateTextColor];
+        [self.masterController.inputTextField setNeedsDisplay:YES];
+    }
+    
 	/* Close users. */
-	if (deselectPointedNickname) {
-		self.pointedNickname = nil;
-	} else {
-		[self deselectMembers:sender];
-	}
-	
+	[self deselectMembers:sender];
+    
 	/* Set focus to the input textfield. */
 	[textField focus];
 }
