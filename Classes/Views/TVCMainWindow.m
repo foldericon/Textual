@@ -85,6 +85,13 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
 - (void)swipeWithEvent:(NSEvent *)event
 {
     CGFloat x = [event deltaX];
+    
+    // Check whether the user has "natural" scrolling enabled and invert output.
+    BOOL invertedScrollingDirection = [[[NSUserDefaults standardUserDefaults] objectForKey:@"com.apple.swipescrolldirection"] boolValue];
+    
+    if (invertedScrollingDirection) {
+        x = x * -1;
+    }
 	
     if (x > 0) {
         [[self masterController] selectNextWindow:nil];
@@ -131,13 +138,22 @@ static NSValue *touchesToPoint(NSTouch *fingerA, NSTouch *fingerB)
 	if (fabs(delta.y) > fabs(delta.x)) {
 		return;
 	}
+    
+    CGFloat x = delta.x;
 
-	if (fabs(delta.x) < TVCSwipeMinimumLength) {
+	if (fabs(x) < TVCSwipeMinimumLength) {
 		return;
 	}
+    
+    // Check whether the user has "natural" scrolling enabled and invert output.
+    BOOL invertedScrollingDirection = [[[NSUserDefaults standardUserDefaults] objectForKey:@"com.apple.swipescrolldirection"] boolValue];
+    
+    if (invertedScrollingDirection) {
+        x = x * -1;
+    }
 
-	if (delta.x > 0) {
-		[[self masterController] selectPreviousWindow:nil];
+	if (x > 0) {
+		[self.masterController selectPreviousWindow:nil];
 	} else {
 		[[self masterController] selectNextWindow:nil];
 	}
